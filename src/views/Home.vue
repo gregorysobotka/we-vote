@@ -1,7 +1,8 @@
 <template>
   <v-container>
-    <SignIn />
-    <TrelloBoard msg="Welcome to Your Vue.js App" />
+    <SignIn v-if="!apiKey" />
+    <TrelloBoard v-if="apiKey" />
+    {{ apiKey }}
   </v-container>
 </template>
 
@@ -15,6 +16,11 @@ export default {
   components: {
     TrelloBoard,
     SignIn
+  },
+  computed: {
+    apiKey: function() {
+      return this.$store.getters.savedAPIKey;
+    }
   }
 };
 </script>

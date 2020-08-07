@@ -10,15 +10,22 @@ export default new Vuex.Store({
     apiKey: ''
   },
   getters: {
-    apiKey(state) {
-      if (state.apiKey !== '') return state.apiKey;
+    savedAPIKey(state) {
       const apiKeyCookie = Cookies.get('apiKey');
-      return apiKeyCookie;
+
+      if (state.apiKey !== '') {
+        return state.apiKey;
+      } else if (apiKeyCookie) {
+        return apiKeyCookie;
+      }
+
+      return '';
     }
   },
   mutations: {
     saveAPIKey(state, apiKey) {
       Cookies.set('apiKey', apiKey, { expires: 7 });
+      this.state.apiKey = apiKey;
     }
   },
   actions: {},
